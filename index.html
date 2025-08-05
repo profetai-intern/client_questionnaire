@@ -32,7 +32,7 @@
                 <h2 class="text-2xl font-bold border-b-2 border-indigo-500 pb-3 mb-6">第一部分：業務目標與挑戰</h2>
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-lg font-semibold mb-3">1. 您希望透過 AI 解決的首要業務挑戰，或達成的主要目標是什麼？</label>
+                        <label class="block text-lg font-semibold mb-3">1. 您希望透過 AI 解決的首要業務挑戰，或達成的主要目標是什麼？ (可複選)</label>
                         <div class="space-y-3">
                             <div class="flex items-center"><input type="checkbox" name="goals" value="predict_trends" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>預測未來趨勢</b></span></div>
                             <div class="flex items-center"><input type="checkbox" name="goals" value="auto_classify" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>自動化分類與判斷</b></span></div>
@@ -57,15 +57,32 @@
                 <h2 class="text-2xl font-bold border-b-2 border-indigo-500 pb-3 mb-6">第二部分：數據與期望產出</h2>
                 <div class="space-y-6">
                      <div>
-                        <label class="block text-lg font-semibold mb-3">4. 您目前用來解決這個問題的數據，主要類型是什麼？</label>
-                        <div class="space-y-3">
-                            <div class="flex items-center"><input type="radio" name="dataType" value="structured" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500"><span class="ml-3 text-gray-700"><b>結構化數據 (Structured Data)</b></span></div>
-                            <div class="flex items-center"><input type="radio" name="dataType" value="unstructured" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500"><span class="ml-3 text-gray-700"><b>非結構化數據 (Unstructured Data)</b></span></div>
-                            <div class="flex items-center"><input type="radio" name="dataType" value="mixed" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500"><span class="ml-3 text-gray-700"><b>混合型數據</b></span></div>
+                        <label class="block text-lg font-semibold mb-3">4. 您目前用來解決這個問題的數據，主要類型是什麼？ (可複選)</label>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" name="dataType" value="structured" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox">
+                                    <span class="ml-3 text-gray-700"><b>結構化數據 (Structured Data)</b></span>
+                                </div>
+                                <p class="ml-8 text-sm text-gray-500">例如：銷售紀錄、客戶基本資料、機台感測器數值。</p>
+                            </div>
+                             <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" name="dataType" value="unstructured" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox">
+                                    <span class="ml-3 text-gray-700"><b>非結構化數據 (Unstructured Data)</b></span>
+                                </div>
+                                <p class="ml-8 text-sm text-gray-500">例如：電子郵件內容、客服對話紀錄、合約文件。</p>
+                            </div>
+                             <div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" name="dataType" value="mixed" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox">
+                                    <span class="ml-3 text-gray-700"><b>混合型數據</b></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-lg font-semibold mb-3">5. 您期望 AI 系統最終「產出」或「回答」的是什麼？</label>
+                        <label class="block text-lg font-semibold mb-3">5. 您期望 AI 系統最終「產出」或「回答」的是什麼？ (單選)</label>
                          <div class="space-y-3">
                             <div class="flex items-center"><input type="radio" name="outputType" value="value" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500"><span class="ml-3 text-gray-700"><b>一個數值或機率</b></span></div>
                             <div class="flex items-center"><input type="radio" name="outputType" value="label" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500"><span class="ml-3 text-gray-700"><b>一個分類標籤</b></span></div>
@@ -135,6 +152,7 @@
         const submissionStatus = document.getElementById('submissionStatus');
 
         function getRecommendation() {
+            const isUnstructured = form.querySelector('input[name="dataType"][value="unstructured"]').checked;
             const scenarioCheckboxes = form.querySelectorAll('input[name="scenario"]');
             const counts = { A: 0, B: 0 };
             scenarioCheckboxes.forEach(checkbox => {
@@ -144,7 +162,14 @@
             let recommendationKey = "none";
             let recommendationHTML = "";
 
-            if (counts.A > counts.B) {
+            // 新增邏輯：只要選了非結構化數據，就優先推薦 LLM
+            if (isUnstructured) {
+                recommendationKey = "LLM 語言模型應用";
+                recommendationHTML = `
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">建議方案：LLM 語言模型應用</h3>
+                    <p class="text-gray-700">因為您處理的數據包含**非結構化數據**（如文字、對話），這類問題，例如建立智能客服、自動摘要報告或分析客戶評論，正是我們 LLM 解決方案的強項。</p>
+                `;
+            } else if (counts.A > counts.B) {
                 recommendationKey = "AutoML 平台";
                 recommendationHTML = `
                     <h3 class="text-xl font-bold text-sky-800 mb-2">建議方案：AutoML 平台</h3>
@@ -184,14 +209,20 @@
             // 1. 收集所有文字和單選欄位的資料
             formData.append('商業價值 (Business Value)', form.querySelector('[name="businessValue"]').value || '-');
             formData.append('其他挑戰 (Challenge Context)', form.querySelector('[name="challengeContext"]').value || '-');
-            formData.append('數據類型 (Data Type)', form.querySelector('[name="dataType"]:checked')?.value || '-');
-            formData.append('期望產出 (Output Type)', form.querySelector('[name="outputType"]:checked')?.value || '-');
+            
+            const outputTypeElement = form.querySelector('input[name="outputType"]:checked');
+            const outputTypeText = outputTypeElement ? outputTypeElement.nextElementSibling.textContent.trim() : '-';
+            formData.append('期望產出 (Output Type)', outputTypeText);
+
             formData.append('數據限制 (Data Limitations)', form.querySelector('[name="dataLimitations"]').value || '-');
             formData.append('理想解決方案 (Ideal Solution)', form.querySelector('[name="idealSolution"]').value || '-');
 
             // 2. 專門處理複選欄位 (checkboxes)，並取得完整的文字描述
             const goals = Array.from(form.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
             formData.append('業務目標 (Goals)', goals.length ? goals.join('; ') : '-');
+
+            const dataTypes = Array.from(form.querySelectorAll('input[name="dataType"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
+            formData.append('數據類型 (Data Type)', dataTypes.length ? dataTypes.join('; ') : '-');
 
             const scenarios = Array.from(form.querySelectorAll('input[name="scenario"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
             formData.append('情境分析選項 (Scenario Selections)', scenarios.length ? scenarios.join('; ') : '-');
