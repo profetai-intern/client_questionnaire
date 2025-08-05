@@ -190,11 +190,11 @@
                 formData.append(name, element ? (element.value || '-') : '-');
             });
 
-            // 2. 專門處理複選欄位 (checkboxes)
-            const goals = Array.from(form.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
+            // 2. 專門處理複選欄位 (checkboxes)，並取得完整的文字描述
+            const goals = Array.from(form.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
             formData.append('goals', goals.length ? goals.join(', ') : '-');
 
-            const scenarios = Array.from(form.querySelectorAll('input[name="scenario"]:checked')).map(cb => cb.value);
+            const scenarios = Array.from(form.querySelectorAll('input[name="scenario"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
             formData.append('scenario', scenarios.length ? scenarios.join(', ') : '-');
             
             // 3. 加入最終建議
