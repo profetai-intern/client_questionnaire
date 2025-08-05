@@ -107,9 +107,6 @@
                 </div>
             </section>
 
-            <!-- 隱藏欄位，用來傳送最終建議 -->
-            <input type="hidden" id="finalRecommendation" name="finalRecommendation" value="">
-
             <!-- 提交按鈕與狀態訊息 -->
             <div class="text-center pt-6">
                 <div id="submissionStatus" class="mb-4"></div>
@@ -185,20 +182,22 @@
             const formData = new FormData();
 
             // 1. 收集所有文字和單選欄位的資料
-            ['businessValue', 'challengeContext', 'dataType', 'outputType', 'dataLimitations', 'idealSolution'].forEach(name => {
-                const element = form.querySelector(`[name="${name}"]:checked`) || form.querySelector(`[name="${name}"]`);
-                formData.append(name, element ? (element.value || '-') : '-');
-            });
+            formData.append('商業價值 (Business Value)', form.querySelector('[name="businessValue"]').value || '-');
+            formData.append('其他挑戰 (Challenge Context)', form.querySelector('[name="challengeContext"]').value || '-');
+            formData.append('數據類型 (Data Type)', form.querySelector('[name="dataType"]:checked')?.value || '-');
+            formData.append('期望產出 (Output Type)', form.querySelector('[name="outputType"]:checked')?.value || '-');
+            formData.append('數據限制 (Data Limitations)', form.querySelector('[name="dataLimitations"]').value || '-');
+            formData.append('理想解決方案 (Ideal Solution)', form.querySelector('[name="idealSolution"]').value || '-');
 
             // 2. 專門處理複選欄位 (checkboxes)，並取得完整的文字描述
             const goals = Array.from(form.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
-            formData.append('goals', goals.length ? goals.join(', ') : '-');
+            formData.append('業務目標 (Goals)', goals.length ? goals.join('; ') : '-');
 
             const scenarios = Array.from(form.querySelectorAll('input[name="scenario"]:checked')).map(cb => cb.nextElementSibling.textContent.trim());
-            formData.append('scenario', scenarios.length ? scenarios.join(', ') : '-');
+            formData.append('情境分析選項 (Scenario Selections)', scenarios.length ? scenarios.join('; ') : '-');
             
             // 3. 加入最終建議
-            formData.append('finalRecommendation', recommendation.key);
+            formData.append('最終建議 (Final Recommendation)', recommendation.key);
 
 
             const formAction = form.getAttribute('action');
