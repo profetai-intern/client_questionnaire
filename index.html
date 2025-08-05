@@ -34,11 +34,11 @@
                     <div>
                         <label class="block text-lg font-semibold mb-3">1. 您希望透過 AI 解決的首要業務挑戰，或達成的主要目標是什麼？</label>
                         <div class="space-y-3">
-                            <div class="flex items-center"><input type="checkbox" name="goals[]" value="predict_trends" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>預測未來趨勢</b></span></div>
-                            <div class="flex items-center"><input type="checkbox" name="goals[]" value="auto_classify" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>自動化分類與判斷</b></span></div>
-                            <div class="flex items-center"><input type="checkbox" name="goals[]" value="improve_efficiency" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>提升營運效率與自動化</b></span></div>
-                            <div class="flex items-center"><input type="checkbox" name="goals[]" value="customer_experience" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>改善客戶互動與體驗</b></span></div>
-                            <div class="flex items-center"><input type="checkbox" name="goals[]" value="text_insights" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>從大量文字中提取洞察</b></span></div>
+                            <div class="flex items-center"><input type="checkbox" name="goals" value="predict_trends" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>預測未來趨勢</b></span></div>
+                            <div class="flex items-center"><input type="checkbox" name="goals" value="auto_classify" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>自動化分類與判斷</b></span></div>
+                            <div class="flex items-center"><input type="checkbox" name="goals" value="improve_efficiency" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>提升營運效率與自動化</b></span></div>
+                            <div class="flex items-center"><input type="checkbox" name="goals" value="customer_experience" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>改善客戶互動與體驗</b></span></div>
+                            <div class="flex items-center"><input type="checkbox" name="goals" value="text_insights" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>從大量文字中提取洞察</b></span></div>
                         </div>
                     </div>
                     <div>
@@ -87,17 +87,17 @@
                     <div class="bg-gray-50 p-6 rounded-lg">
                         <h3 class="text-xl font-bold mb-4 text-sky-700">情境 A：預測與分類</h3>
                         <div class="space-y-3">
-                            <div class="flex items-start"><input type="checkbox" name="scenario[]" value="A" class="h-5 w-5 mt-1 rounded border-gray-300 text-sky-600 focus:ring-sky-500 custom-checkbox"><span class="ml-3 text-gray-700">根據<b>歷史數據</b>，預測<b>未來數值</b>。</span></div>
-                            <div class="flex items-start"><input type="checkbox" name="scenario[]" value="A" class="h-5 w-5 mt-1 rounded border-gray-300 text-sky-600 focus:ring-sky-500 custom-checkbox"><span class="ml-3 text-gray-700">將事物自動分成<b>明確類別</b>。</span></div>
-                            <div class="flex items-start"><input type="checkbox" name="scenario[]" value="A" class="h-5 w-5 mt-1 rounded border-gray-300 text-sky-600 focus:ring-sky-500 custom-checkbox"><span class="ml-3 text-gray-700">決策依賴<b>數據表格</b>與<b>歷史紀錄</b>。</span></div>
+                            <div class="flex items-start"><input type="checkbox" name="scenario" value="A" class="h-5 w-5 mt-1 rounded border-gray-300 text-sky-600 focus:ring-sky-500 custom-checkbox"><span class="ml-3 text-gray-700">根據<b>歷史數據</b>，預測<b>未來數值</b>。</span></div>
+                            <div class="flex items-start"><input type="checkbox" name="scenario" value="A" class="h-5 w-5 mt-1 rounded border-gray-300 text-sky-600 focus:ring-sky-500 custom-checkbox"><span class="ml-3 text-gray-700">將事物自動分成<b>明確類別</b>。</span></div>
+                            <div class="flex items-start"><input type="checkbox" name="scenario" value="A" class="h-5 w-5 mt-1 rounded border-gray-300 text-sky-600 focus:ring-sky-500 custom-checkbox"><span class="ml-3 text-gray-700">決策依賴<b>數據表格</b>與<b>歷史紀錄</b>。</span></div>
                         </div>
                     </div>
                     <div class="bg-gray-50 p-6 rounded-lg">
                         <h3 class="text-xl font-bold mb-4 text-emerald-700">情境 B：理解與生成</h3>
                          <div class="space-y-3">
-                            <div class="flex items-start"><input type="checkbox" name="scenario[]" value="B" class="h-5 w-5 mt-1 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 custom-checkbox"><span class="ml-3 text-gray-700">大量<b>閱讀、摘要或撰寫</b>文字。</span></div>
-                            <div class="flex items-start"><input type="checkbox" name="scenario[]" value="B" class="h-5 w-5 mt-1 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 custom-checkbox"><span class="ml-3 text-gray-700">打造<b>智能助理</b>或<b>問答系統</b>。</span></div>
-                            <div class="flex items-start"><input type="checkbox" name="scenario[]" value="B" class="h-5 w-5 mt-1 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 custom-checkbox"><span class="ml-3 text-gray-700">分析<b>客戶回饋、評論或對話</b>。</span></div>
+                            <div class="flex items-start"><input type="checkbox" name="scenario" value="B" class="h-5 w-5 mt-1 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 custom-checkbox"><span class="ml-3 text-gray-700">大量<b>閱讀、摘要或撰寫</b>文字。</span></div>
+                            <div class="flex items-start"><input type="checkbox" name="scenario" value="B" class="h-5 w-5 mt-1 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 custom-checkbox"><span class="ml-3 text-gray-700">打造<b>智能助理</b>或<b>問答系統</b>。</span></div>
+                            <div class="flex items-start"><input type="checkbox" name="scenario" value="B" class="h-5 w-5 mt-1 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 custom-checkbox"><span class="ml-3 text-gray-700">分析<b>客戶回饋、評論或對話</b>。</span></div>
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
         const submissionStatus = document.getElementById('submissionStatus');
 
         function getRecommendation() {
-            const scenarioCheckboxes = form.querySelectorAll('input[name="scenario[]"]');
+            const scenarioCheckboxes = form.querySelectorAll('input[name="scenario"]');
             const counts = { A: 0, B: 0 };
             scenarioCheckboxes.forEach(checkbox => {
                 if (checkbox.checked) { counts[checkbox.value]++; }
@@ -180,13 +180,32 @@
             event.preventDefault(); // 防止表單預設的提交行為
 
             const recommendation = getRecommendation();
-            document.getElementById('finalRecommendation').value = recommendation.key;
+            
+            // 建立一個新的 FormData 物件來手動控制提交的資料
+            const formData = new FormData();
 
-            const formData = new FormData(form);
+            // 1. 收集所有文字和單選欄位的資料
+            ['businessValue', 'challengeContext', 'dataType', 'outputType', 'dataLimitations', 'idealSolution'].forEach(name => {
+                const element = form.querySelector(`[name="${name}"]:checked`) || form.querySelector(`[name="${name}"]`);
+                formData.append(name, element ? (element.value || '-') : '-');
+            });
+
+            // 2. 專門處理複選欄位 (checkboxes)
+            const goals = Array.from(form.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
+            formData.append('goals', goals.length ? goals.join(', ') : '-');
+
+            const scenarios = Array.from(form.querySelectorAll('input[name="scenario"]:checked')).map(cb => cb.value);
+            formData.append('scenario', scenarios.length ? scenarios.join(', ') : '-');
+            
+            // 3. 加入最終建議
+            formData.append('finalRecommendation', recommendation.key);
+
+
             const formAction = form.getAttribute('action');
 
             submitButton.disabled = true;
             submitButton.textContent = '傳送中...';
+            submissionStatus.innerHTML = ''; // 清空舊的錯誤訊息
 
             fetch(formAction, {
                 method: 'POST',
@@ -202,20 +221,19 @@
                     recommendationContent.innerHTML = recommendation.html;
                 } else {
                     // 處理 Formspree 的錯誤
-                    response.json().then(data => {
-                        if (Object.hasOwn(data, 'errors')) {
-                            const errorMsg = data["errors"].map(error => error["message"]).join(", ");
+                    return response.json().then(data => {
+                        if (data && data.errors) {
+                            const errorMsg = data.errors.map(error => error.message).join(", ");
                             throw new Error(errorMsg);
-                        } else {
-                            throw new Error('發生未知的錯誤，請稍後再試。');
                         }
-                    })
+                        throw new Error('發生未知的伺服器錯誤。');
+                    });
                 }
             }).catch(error => {
                 // 處理網路錯誤或上面拋出的錯誤
                 submissionStatus.innerHTML = `<p class="text-red-600 font-semibold">提交失敗：${error.toString()}</p>`;
                 submitButton.disabled = false;
-                submitButton.textContent = '重新提交';
+                submitButton.textContent = '提交問卷';
             });
         });
     </script>
