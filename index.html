@@ -11,7 +11,8 @@
     <style>
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         .custom-checkbox:checked { background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); }
-        #submissionStatus { transition: opacity 0.5s ease-in-out; }
+        /* 初始隱藏結果區塊 */
+        #resultsSection { display: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -33,7 +34,6 @@
                     <div>
                         <label class="block text-lg font-semibold mb-3">1. 您希望透過 AI 解決的首要業務挑戰，或達成的主要目標是什麼？</label>
                         <div class="space-y-3">
-                            <!-- 加上 name="goals[]" 讓 Formspree 能收集多個選項 -->
                             <div class="flex items-center"><input type="checkbox" name="goals[]" value="predict_trends" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>預測未來趨勢</b></span></div>
                             <div class="flex items-center"><input type="checkbox" name="goals[]" value="auto_classify" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>自動化分類與判斷</b></span></div>
                             <div class="flex items-center"><input type="checkbox" name="goals[]" value="improve_efficiency" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 custom-checkbox"><span class="ml-3 text-gray-700"><b>提升營運效率與自動化</b></span></div>
@@ -112,47 +112,112 @@
 
             <!-- 提交按鈕與狀態訊息 -->
             <div class="text-center pt-6">
+                <div id="submissionStatus" class="mb-4"></div>
                 <button id="submitButton" type="submit" class="bg-indigo-600 text-white font-bold text-lg py-3 px-10 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition-transform transform hover:scale-105">
                     提交問卷
                 </button>
             </div>
         </form>
+
+        <!-- 新增的結果顯示區塊 -->
+        <div id="resultsSection" class="bg-white p-8 sm:p-12 rounded-2xl shadow-lg text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">感謝您的填寫！</h2>
+            <p class="text-lg text-gray-600 mb-8">根據您的回覆，我們為您提供了以下的初步分析與建議：</p>
+            <div id="recommendationContent" class="bg-gray-50 p-6 rounded-lg text-left">
+                <!-- 建議內容將由 JavaScript 動態生成 -->
+            </div>
+            <p class="mt-8 text-gray-500">我們將在接下來的工作坊中，與您深入探討這些細節。</p>
+        </div>
     </div>
 
     <script>
         const form = document.getElementById('aiQuestionnaire');
-        const scenarioCheckboxes = form.querySelectorAll('input[name="scenario[]"]');
-        const finalRecommendationInput = document.getElementById('finalRecommendation');
+        const resultsSection = document.getElementById('resultsSection');
+        const recommendationContent = document.getElementById('recommendationContent');
+        const submitButton = document.getElementById('submitButton');
+        const submissionStatus = document.getElementById('submissionStatus');
 
-        function updateRecommendation() {
+        function getRecommendation() {
+            const scenarioCheckboxes = form.querySelectorAll('input[name="scenario[]"]');
             const counts = { A: 0, B: 0 };
             scenarioCheckboxes.forEach(checkbox => {
                 if (checkbox.checked) { counts[checkbox.value]++; }
             });
 
-            let recommendation = "未選擇情境";
+            let recommendationKey = "none";
+            let recommendationHTML = "";
+
             if (counts.A > counts.B) {
-                recommendation = "AutoML 平台";
+                recommendationKey = "AutoML 平台";
+                recommendationHTML = `
+                    <h3 class="text-xl font-bold text-sky-800 mb-2">建議方案：AutoML 平台</h3>
+                    <p class="text-gray-700">您的需求偏向於從**歷史數據**中進行**預測與分類**。這類問題，例如預測銷售額或判斷客戶流失，非常適合使用我們的 AutoML 平台來快速建立高效能的預測模型。</p>
+                `;
             } else if (counts.B > counts.A) {
-                recommendation = "LLM 語言模型應用";
+                recommendationKey = "LLM 語言模型應用";
+                recommendationHTML = `
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">建議方案：LLM 語言模型應用</h3>
+                    <p class="text-gray-700">您的需求偏向於**理解與生成文字內容**。這類問題，例如建立智能客服、自動摘要報告或分析客戶評論，正是我們 LLM 解決方案的強項。</p>
+                `;
             } else if (counts.A > 0 && counts.A === counts.B) {
-                recommendation = "AutoML + LLM 混合策略";
+                recommendationKey = "AutoML + LLM 混合策略";
+                recommendationHTML = `
+                    <h3 class="text-xl font-bold text-indigo-800 mb-2">建議方案：AutoML + LLM 混合策略</h3>
+                    <p class="text-gray-700">您的需求兼具**數據預測**與**語言處理**的特性。這代表貴公司有潛力導入更全面的 AI 策略，我們可以探討如何結合兩種解決方案，創造最大價值。</p>
+                `;
+            } else {
+                 recommendationKey = "未選擇情境";
+                 recommendationHTML = `
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">尚無明確建議</h3>
+                    <p class="text-gray-700">您尚未在情境分析中做出選擇，我們將在工作坊中與您一同釐清最適合的方案。</p>
+                `;
             }
-            // 將最終建議設定到隱藏欄位的值中
-            finalRecommendationInput.value = recommendation;
+
+            return { key: recommendationKey, html: recommendationHTML };
         }
 
-        scenarioCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateRecommendation);
-        });
-        
-        // 在表單提交前，最後一次更新建議
-        form.addEventListener('submit', function() {
-            updateRecommendation();
-        });
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表單預設的提交行為
 
-        // 頁面載入時先執行一次
-        updateRecommendation();
+            const recommendation = getRecommendation();
+            document.getElementById('finalRecommendation').value = recommendation.key;
+
+            const formData = new FormData(form);
+            const formAction = form.getAttribute('action');
+
+            submitButton.disabled = true;
+            submitButton.textContent = '傳送中...';
+
+            fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // 成功提交
+                    form.style.display = 'none'; // 隱藏表單
+                    resultsSection.style.display = 'block'; // 顯示結果
+                    recommendationContent.innerHTML = recommendation.html;
+                } else {
+                    // 處理 Formspree 的錯誤
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            const errorMsg = data["errors"].map(error => error["message"]).join(", ");
+                            throw new Error(errorMsg);
+                        } else {
+                            throw new Error('發生未知的錯誤，請稍後再試。');
+                        }
+                    })
+                }
+            }).catch(error => {
+                // 處理網路錯誤或上面拋出的錯誤
+                submissionStatus.innerHTML = `<p class="text-red-600 font-semibold">提交失敗：${error.toString()}</p>`;
+                submitButton.disabled = false;
+                submitButton.textContent = '重新提交';
+            });
+        });
     </script>
 </body>
 </html>
