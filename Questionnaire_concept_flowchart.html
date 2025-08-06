@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 問卷建議邏輯流程圖 (詳細版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        /* 箭頭樣式 */
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #9ca3af; /* gray-400 */
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem; /* rounded-2xl */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-xl */
+            padding: 1.5rem; /* p-6 */
+            width: 100%;
+            max-width: 36rem; /* max-w-lg */
+        }
+    </style>
+</head>
+<body class="bg-slate-100 flex justify-center items-start min-h-screen p-4 sm:p-8">
+    <div class="w-full max-w-5xl">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900">AI 問卷建議邏輯流程圖 (完整版)</h1>
+            <p class="mt-3 text-lg text-slate-600">解釋問卷如何根據客戶的選擇，自動產生對應的解決方案建議。</p>
+        </header>
+
+        <div class="flex flex-col items-center space-y-8">
+
+            <!-- 起點 -->
+            <div class="bg-white p-4 rounded-full shadow-lg border-2 border-indigo-500 flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+                <span class="text-lg font-bold text-slate-800">起點：客戶提交問卷</span>
+            </div>
+
+            <div class="arrow-down"></div>
+
+            <!-- 背景盤點 -->
+            <div class="card border-t-8 border-amber-500">
+                <div class="flex items-start">
+                    <div class="bg-amber-100 text-amber-600 p-3 rounded-full shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-xl font-bold text-slate-900">背景盤點：了解業務目標</h2>
+                        <p class="text-slate-600 mt-1">分析第一部分，為後續的建議提供重要的情境脈絡。</p>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+
+                <div>
+                    <h3 class="font-bold text-lg text-slate-800">判斷基準：</h3>
+                    <p class="mt-2 text-slate-700">這一步驟<strong class="text-slate-800">沒有自動判斷</strong>，主要是<strong class="text-slate-800">資訊收集</strong>，以幫助我們理解客戶的「為什麼」。</p>
+                    <ul class="mt-2 list-disc list-inside space-y-1 text-sm text-slate-600">
+                        <li><strong>第一題 (業務目標)：</strong>初步對應客戶需求。例如「預測趨勢」傾向 AutoML，「提取洞察」傾向 LLM。</li>
+                        <li><strong>第二、三題 (開放式問題)：</strong>提供質化資訊，讓我們了解客戶期望的商業價值與具體痛點。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down"></div>
+
+            <!-- 第一關：檢查數據類型 -->
+            <div class="card border-t-8 border-red-500">
+                <div class="flex items-start">
+                    <div class="bg-red-100 text-red-600 p-3 rounded-full shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-xl font-bold text-slate-900">第一關：檢查數據類型 (最高優先級)</h2>
+                        <p class="text-slate-600 mt-1">分析第四題「數據類型」的選項，這是最關鍵的指標。</p>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+
+                <div>
+                    <h3 class="font-bold text-lg text-slate-800">判斷基準：</h3>
+                    <p class="mt-2 text-slate-700">系統會檢查客戶是否勾選了<strong class="text-red-600">「非結構化數據」</strong>。</p>
+                    <p class="mt-1 text-sm text-slate-500">因為處理文字、郵件、合約等非結構化資料是 LLM 的核心強項，所以這個選項具有一票否決權。</p>
+                </div>
+                
+                <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                    <!-- 判斷路徑 -->
+                    <div class="flex-1 bg-red-50 border-l-4 border-red-400 p-4 rounded-r-lg">
+                        <p class="font-bold text-red-800">IF 成立 (已勾選)</p>
+                        <p class="mt-2 text-slate-700">➡️ 直接跳到最終結果，建議 <strong class="text-emerald-600">LLM 應用</strong>。</p>
+                    </div>
+                    <div class="flex-1 bg-slate-100 border-l-4 border-slate-400 p-4 rounded-r-lg">
+                        <p class="font-bold text-slate-800">IF 不成立</p>
+                        <p class="mt-2 text-slate-700">➡️ 進入第二關的判斷。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-down"></div>
+
+            <!-- 第二關：比較情境分析 -->
+            <div class="card border-t-8 border-blue-500">
+                <div class="flex items-start">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-xl font-bold text-slate-900">第二關：比較「情境分析」勾選數</h2>
+                        <p class="text-slate-600 mt-1">計算第三部分「情境 A (預測)」 vs. 「情境 B (生成)」的勾選數量。</p>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+
+                <div class="mt-4 space-y-4">
+                    <!-- 判斷路徑 -->
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
+                        <p class="font-bold text-blue-800">IF「情境 A」勾選數 >「情境 B」勾選數</p>
+                        <p class="mt-1 text-sm text-slate-600"><strong>判斷基準：</strong>客戶的需求更偏向數據預測與分類。</p>
+                        <p class="mt-1 text-slate-700">➡️ 建議 <strong class="text-sky-600">AutoML 平台</strong>。</p>
+                    </div>
+                    <div class="bg-emerald-50 border-l-4 border-emerald-400 p-4 rounded-r-lg">
+                        <p class="font-bold text-emerald-800">IF「情境 B」勾選數 >「情境 A」勾選數</p>
+                        <p class="mt-1 text-sm text-slate-600"><strong>判斷基準：</strong>客戶的需求更偏向文字理解與內容生成。</p>
+                        <p class="mt-1 text-slate-700">➡️ 建議 <strong class="text-emerald-600">LLM 語言模型應用</strong>。</p>
+                    </div>
+                    <div class="bg-indigo-50 border-l-4 border-indigo-400 p-4 rounded-r-lg">
+                        <p class="font-bold text-indigo-800">IF 兩者勾選數相等 (且 > 0)</p>
+                        <p class="mt-1 text-sm text-slate-600"><strong>判斷基準：</strong>客戶的需求同時涵蓋了數據預測與文字處理。</p>
+                        <p class="mt-1 text-slate-700">➡️ 建議 <strong class="text-indigo-600">AutoML + LLM 混合策略</strong>。</p>
+                    </div>
+                     <div class="bg-slate-100 border-l-4 border-slate-400 p-4 rounded-r-lg">
+                        <p class="font-bold text-slate-800">ELSE (未勾選任何情境)</p>
+                        <p class="mt-1 text-sm text-slate-600"><strong>判斷基準：</strong>客戶未提供足夠資訊進行初步判斷。</p>
+                        <p class="mt-1 text-slate-700">➡️ 顯示「尚無明確建議」。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down"></div>
+
+            <!-- 終點 -->
+            <div class="bg-white p-4 rounded-full shadow-lg border-2 border-emerald-500 flex items-center space-x-3">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="text-lg font-bold text-slate-800">終點：顯示客製化建議與總結</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
